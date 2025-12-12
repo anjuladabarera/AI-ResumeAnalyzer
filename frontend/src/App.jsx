@@ -1,14 +1,15 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
-import UploadPDF from "./pages/uploadPDF.jsx";
 import UploadJobDescription from "./pages/uploadJobDescription.jsx";
+
+import UploadPDFATSScore from "./pages/uploadPDFATSScore.jsx";
 
 const App = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/upload-pdf" element={<UploadPDF />} />
+      <Route path="/getATSScore" element={<UploadPDFATSScore />} />
       <Route path="/upload-job-description" element={<UploadJobDescription />} />
     </Routes>
   );

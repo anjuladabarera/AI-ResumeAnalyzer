@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../App.css"; // ✅ Correct
+import "../styles/uploadPDFATSScore.css";
+// import "../App.css";
 
-const UploadPDF = () => {
+const UploadPDFATSScore = () => {
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState("");
   const [extractedText, setExtractedText] = useState("");
@@ -104,110 +105,89 @@ const UploadPDF = () => {
     return "bg-red-500";
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50 py-10 px-4 md:px-10 font-sans">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-10">
-          Resume Upload & ATS Analysis
-        </h1>
+ return (
+  <div className="card">
+    <div className="ats-score-page">
+      <div className="upload-section">
+        <h1>Resume Upload & ATS Analysis</h1>
 
-        {/* Upload Section */}
-        <div className="flex flex-col md:flex-row items-center gap-4 mb-8">
-          <input
-            type="file"
-            accept="application/pdf"
-            onChange={handleFileChange}
-            className="border border-gray-300 p-3 rounded w-full md:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-          />
-          <button
-            onClick={handleUpload}
-            disabled={loadingUpload}
-            className={`px-6 py-3 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-all duration-300 ${
-              loadingUpload ? "opacity-60 cursor-not-allowed" : ""
-            }`}
-          >
-            {loadingUpload ? "Uploading..." : "Upload PDF"}
+        <div className="upload-controls">
+          <input type="file" accept="application/pdf" onChange={handleFileChange} />
+          <button className="upload-now-button" onClick={handleUpload} disabled={loadingUpload}>
+            {loadingUpload ? "Uploading..." : "Upload PDFFF"}
           </button>
         </div>
 
-        {message && <p className="text-center mb-6 text-gray-700 font-medium">{message}</p>}
+        {message && <p className="upload-message">{message}</p>}
 
-        {/* Results Section */}
         {extractedText && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Extracted Text */}
-            <div className="p-6 bg-white rounded-xl shadow-lg overflow-auto max-h-[500px]">
-              <h2 className="text-xl font-semibold mb-3 border-b pb-2">Extracted Text</h2>
-              <p className="text-gray-700 text-sm whitespace-pre-wrap">{extractedText}</p>
+          <div className="results-grid">
+            <div className="ats-card ats-card-scroll">
+              <h2>Extracted Text</h2>
+              <p>{extractedText}</p>
             </div>
 
-            {/* ATS Analysis */}
-            <div className="p-6 bg-white rounded-xl shadow-lg overflow-auto max-h-[500px]">
-              <h2 className="text-xl font-semibold mb-4 border-b pb-2">ATS Analysis</h2>
+            <div className="ats-card ats-card-scroll">
+              <h2>ATS Analysis</h2>
               {loadingAI ? (
-                <p className="text-gray-500 animate-pulse">Analyzing resume...</p>
+                <p className="ats-loading">Analyzing resume...</p>
               ) : (
                 analysis && (
                   <>
                     {/* Score Bar */}
-                    <div className="mb-4">
-                      <p className="font-semibold mb-1">ATS Score: {analysis?.ats_score}</p>
-<div className="w-full h-4 bg-gray-200 rounded">
-  <div
-    className={`h-4 rounded ${getScoreColor(analysis?.ats_score)}`}
-    style={{ width: `${analysis?.ats_score || 0}%` }}
-  />
-</div>
+                    <div className="score-section">
+                      <p>ATS Score: {analysis.ats_score}</p>
+                      <div className="ats-score-bar">
+                        <div
+                          className="ats-score-fill"
+                          style={{ width: `${analysis.ats_score || 0}%`, backgroundColor: getScoreColor(analysis.ats_score) }}
+                        />
+                      </div>
                     </div>
 
                     {/* Strengths */}
-                    <div className="mb-4">
-                      <p className="font-semibold mb-1">Strengths:</p>
+                    <div className="strengths-section">
+                      <p>Strengths:</p>
                       {analysis.strengths.length > 0 ? (
-                        <ul className="list-disc list-inside text-gray-700">
+                        <ul className="strengths-list">
                           {analysis.strengths.map((s, i) => <li key={i}>{s}</li>)}
                         </ul>
                       ) : (
-                        <p className="text-gray-500 text-sm">No strengths detected.</p>
+                        <p>No strengths detected.</p>
                       )}
                     </div>
 
                     {/* Weaknesses */}
-                    <div className="mb-4">
-                      <p className="font-semibold mb-1">Weaknesses:</p>
+                    <div className="weaknesses-section">
+                      <p>Weaknesses:</p>
                       {analysis.weaknesses.length > 0 ? (
-                        <ul className="list-disc list-inside text-red-600">
+                        <ul className="weaknesses-list">
                           {analysis.weaknesses.map((w, i) => <li key={i}>{w}</li>)}
                         </ul>
                       ) : (
-                        <p className="text-gray-500 text-sm">No weaknesses detected.</p>
+                        <p>No weaknesses detected.</p>
                       )}
                     </div>
 
                     {/* Missing Keywords */}
-                    <div className="mb-4">
-                      <p className="font-semibold mb-1">Missing Keywords:</p>
+                    <div className="missing-keywords-section">
+                      <p>Missing Keywords:</p>
                       {analysis.missing_keywords.length > 0 ? (
-                        <div className="flex flex-wrap gap-2 mt-1">
+                        <div className="flex-wrap">
                           {analysis.missing_keywords.map((k, i) => (
-                            <span
-                              key={i}
-                              className="px-2 py-1 bg-red-100 text-red-700 rounded-full text-xs"
-                            >
-                              {k}
-                            </span>
+                            <span key={i} className="missing-keyword">{k}</span>
                           ))}
                         </div>
                       ) : (
-                        <p className="text-gray-500 text-sm">No missing keywords.</p>
+                        <p>No missing keywords.</p>
                       )}
                     </div>
 
                     {/* Summary */}
                     {analysis.summary && (
-                      <div>
-                        <p className="font-semibold mb-1">Summary:</p>
-                        <p className="text-gray-700 text-sm whitespace-pre-wrap">{analysis.summary}</p>
+                      <div className="summary-section">
+                        <p>Summary:</p>
+                        <p>{analysis.summary}</p>
                       </div>
                     )}
                   </>
@@ -218,7 +198,9 @@ const UploadPDF = () => {
         )}
       </div>
     </div>
+  </div>
   );
+  
 };
 
-export default UploadPDF;
+export default UploadPDFATSScore;

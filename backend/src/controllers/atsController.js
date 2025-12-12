@@ -1,33 +1,49 @@
-import OpenAI from "openai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import dotenv from "dotenv";
+dotenv.config();
 
-console.log("OPENAI_API_KEY:", process.env.OPENAI_API_KEY);
-
-
-
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY, // now it should work
-});
-
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 export const atsScore = async (req, res) => {
   try {
-    const { text } = req.body; // text from the uploaded PDF
+    const { text } = req.body;
 
-    const response = await client.chat.completions.create({
-      model: "gpt-4.1-mini",
-      messages: [
-        {
-          role: "user",
-          content: `Analyze this CV text and give me an ATS score out of 100, along with feedback:\n\n${text}`,
-        },
-      ],
+    if (!text) {
+      return res.status(400).json({ message: "No text provided" });
+    }
+
+    const prompt = `
+      You are an ATS (Applicant Tracking System). Analyze the following resume:
+
+      ${text}
+
+      Reply ONLY in the following JSON format:
+
+      {
+        "ats_score": number,
+        "skills_match": number,
+        "experience_match": number,
+        "missing_keywords": [],
+        "strengths": [],
+        "weaknesses": [],
+        "summary": ""
+      }
+    `;
+
+    const result = await model.generateContent(prompt);
+    const output = result.response.text(); // Gemini returns plain text
+
+    res.status(200).json({
+      success: true,
+      analysis: output, // This goes directly to your frontend <p>{analysis}</p>
     });
 
-    const result = response.choices[0].message.content;
-
-    res.status(200).json({ analysis: result });
   } catch (error) {
     console.error("Error analyzing CV:", error);
-    res.status(500).json({ message: "Error analyzing CV" });
+    res.status(500).json({
+      success: false,
+      message: "Error analyzing CV",
+    });
   }
 };

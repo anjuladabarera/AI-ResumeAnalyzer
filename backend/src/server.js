@@ -1,5 +1,5 @@
-import 'dotenv/config'; // <-- this automatically loads .env for ESM
-
+import dotenv from "dotenv";
+dotenv.config();
 
 
 import express from 'express';

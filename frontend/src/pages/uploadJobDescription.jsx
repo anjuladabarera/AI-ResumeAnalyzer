@@ -5,15 +5,12 @@ import "../styles/uploadJobDescription.css";
 
 const UploadJobDescription = () => {
 
-
-
-    const getScoreColor = (score) => {
+  const getScoreColor = (score = 0) => {
     if (score >= 80) return "bg-green-500";
     if (score >= 50) return "bg-yellow-400";
     return "bg-red-500";
-    };
+  };
 
-    
   const [jobDescription, setJobDescription] = useState("");
   const [file, setFile] = useState(null);
   const [resumeText, setResumeText] = useState("");
@@ -22,7 +19,6 @@ const UploadJobDescription = () => {
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [loadingAI, setLoadingAI] = useState(false);
 
-  // Warn before leaving
   useEffect(() => {
     const handleBeforeUnload = (e) => {
       if (!file) return;
@@ -33,7 +29,6 @@ const UploadJobDescription = () => {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [file]);
 
-  // Handle PDF upload
   const handleFileChange = (e) => setFile(e.target.files[0]);
 
   const handleUpload = async () => {
@@ -63,7 +58,6 @@ const UploadJobDescription = () => {
     }
   };
 
-  // Handle comparison
   const handleCompare = async () => {
     if (!jobDescription || !resumeText) {
       return alert("Both Job Description and Resume must be provided");
@@ -85,131 +79,150 @@ const UploadJobDescription = () => {
     } finally {
       setLoadingAI(false);
     }
-
   };
 
-
-    
-
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Job Description & Resume Comparison</h1>
+    <div className="max-w-5xl mx-auto px-6 py-10">
 
-      {/* Navigation Links */}
-      <div className="flex gap-4 mb-6">
-        <Link to="/" className="back-home-button">Back Home</Link>
-        <Link to="/getATSScore" className="get-ATScore-button">Get ATS Score</Link>
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-gray-800 mb-2">
+          Resume vs Job Description
+        </h1>
+        <p className="text-gray-500">
+          Upload your resume and compare it with a job description instantly
+        </p>
       </div>
 
-      {/* Job Description */}
-      <textarea
-        value={jobDescription}
-        onChange={(e) => setJobDescription(e.target.value)}
-        rows="10"
-        placeholder="Paste job description here..."
-        className="w-full p-3 border rounded mb-4"
-      />
+      {/* Navigation */}
+      <div className="flex gap-4 mb-8">
+        <Link to="/" className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300">
+          Back Home
+        </Link>
+        <Link to="/getATSScore" className="px-4 py-2 rounded bg-indigo-600 text-white hover:bg-indigo-700">
+          Get ATS Score
+        </Link>
+      </div>
 
-      {/* Resume Upload */}
-      <input type="file" accept="application/pdf" onChange={handleFileChange} className="mb-2" />
-      <button
-        onClick={handleUpload}
-        disabled={loadingUpload}
-        className="px-4 py-2 bg-blue-600 text-white rounded mb-4"
-      >
-        {loadingUpload ? "Uploading..." : "Upload Resume PDF"}
-      </button>
+      {/* Job Description Card */}
+      <div className="bg-white shadow rounded-lg p-6 mb-6">
+        <h2 className="font-semibold text-lg mb-3">Job Description</h2>
+        <textarea
+          rows="8"
+          value={jobDescription}
+          onChange={(e) => setJobDescription(e.target.value)}
+          placeholder="Paste the job description here..."
+          className="w-full p-3 border rounded focus:outline-none focus:ring"
+        />
+      </div>
 
-      {message && <p className="mb-4 text-gray-700">{message}</p>}
-      {resumeText && (
-        <div className="p-4 bg-gray-100 rounded mb-4 max-h-40 overflow-auto">
-          <strong>Resume Text Extracted:</strong>
-          <p>{resumeText}</p>
-        </div>
-      )}
+      {/* Resume Upload Card */}
+      <div className="bg-white shadow rounded-lg p-6 mb-6">
+        <h2 className="font-semibold text-lg mb-3">Upload Resume (PDF)</h2>
+
+        <input
+          type="file"
+          accept="application/pdf"
+          onChange={handleFileChange}
+          className="mb-3"
+        />
+
+        <button
+          onClick={handleUpload}
+          disabled={loadingUpload}
+          className="px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+        >
+          {loadingUpload ? "Uploading..." : "Upload Resume"}
+        </button>
+
+        {message && <p className="mt-3 text-sm text-gray-600">{message}</p>}
+
+        {resumeText && (
+          <div className="mt-4 bg-gray-100 p-4 rounded max-h-40 overflow-auto">
+            <p className="text-sm font-semibold mb-1">Extracted Resume Text</p>
+            <p className="text-sm text-gray-700">{resumeText}</p>
+          </div>
+        )}
+      </div>
 
       {/* Compare Button */}
       <button
         onClick={handleCompare}
         disabled={loadingAI}
-        className="px-4 py-2 bg-green-600 text-white rounded mb-4"
+        className="w-full py-3 mb-10 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50"
       >
-        {loadingAI ? "Analyzing..." : "Compare JD & Resume"}
+        {loadingAI ? "Analyzing..." : "Compare Resume & JD"}
       </button>
 
       {/* Analysis Result */}
       {analysis && (
-  <div className="analysis-container">
-    <h2 className="analysis-title">Comparison Result</h2>
+        <div className="bg-white shadow rounded-lg p-6">
+          <h2 className="text-xl font-bold mb-6">Comparison Result</h2>
 
-    {/* Match Score */}
-    <div className="score-card">
-      <p className="score-label">Match Score:</p>
-      <div className="score-bar">
-        <div
-          className={`score-fill ${getScoreColor(analysis.match_score)}`}
-          style={{ width: `${analysis.match_score}%` }}
-        ></div>
-      </div>
-      <p className="score-number">{analysis.match_score}%</p>
-    </div>
+          {/* Match Score */}
+          <div className="mb-6">
+            <p className="mb-2 font-medium">Match Score</p>
+            <div className="w-full bg-gray-200 rounded h-4 overflow-hidden">
+              <div
+                className={`h-4 ${getScoreColor(analysis.match_score)}`}
+                style={{ width: `${analysis.match_score || 0}%` }}
+              />
+            </div>
+            <p className="mt-1 text-sm text-gray-600">
+              {analysis.match_score || 0}%
+            </p>
+          </div>
 
-    {/* Strengths */}
-    <div className="analysis-card">
-      <h3>Strengths</h3>
-      {analysis.strengths.length > 0 ? (
-        <ul>
-          {analysis.strengths.map((s, i) => (
-            <li key={i}>{s}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>No strengths detected.</p>
-      )}
-    </div>
+          {/* Strengths */}
+          <Section title="Strengths" items={analysis.strengths} />
 
-    {/* Weaknesses */}
-    <div className="analysis-card">
-      <h3>Weaknesses</h3>
-      {analysis.weaknesses.length > 0 ? (
-        <ul>
-          {analysis.weaknesses.map((w, i) => (
-            <li key={i}>{w}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>No weaknesses detected.</p>
-      )}
-    </div>
+          {/* Weaknesses */}
+          <Section title="Weaknesses" items={analysis.weaknesses} />
 
-    {/* Missing Skills */}
-    <div className="analysis-card">
-      <h3>Missing Skills</h3>
-      {analysis.missing_skills.length > 0 ? (
-        <div className="tags-container">
-          {analysis.missing_skills.map((skill, i) => (
-            <span key={i} className="tag">
-              {skill}
-            </span>
-          ))}
+          {/* Missing Skills */}
+          <div className="mb-6">
+            <h3 className="font-semibold mb-2">Missing Skills</h3>
+            <div className="flex flex-wrap gap-2">
+              {(analysis.missing_skills || []).map((skill, i) => (
+                <span
+                  key={i}
+                  className="px-3 py-1 text-sm bg-red-100 text-red-700 rounded-full"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Summary */}
+          {analysis.summary && (
+            <div>
+              <h3 className="font-semibold mb-2">Summary</h3>
+              <p className="text-gray-700">{analysis.summary}</p>
+            </div>
+          )}
         </div>
-      ) : (
-        <p>No missing skills.</p>
       )}
-    </div>
-
-    {/* Summary */}
-    {analysis.summary && (
-      <div className="analysis-card">
-        <h3>Summary</h3>
-        <p>{analysis.summary}</p>
-      </div>
-    )}
-  </div>
-)}
-
     </div>
   );
 };
+
+/* Small helper component for lists */
+const Section = ({ title, items = [] }) => (
+  <div className="mb-6">
+    <h3 className="font-semibold mb-2">{title}</h3>
+    {items.length > 0 ? (
+      <ul className="list-disc pl-5 text-gray-700">
+        {items.map((item, i) => (
+          <li key={i}>{item}</li>
+        ))}
+      </ul>
+    ) : (
+      <p className="text-gray-500">No data available.</p>
+    )}
+  </div>
+);
+
+
 
 export default UploadJobDescription;

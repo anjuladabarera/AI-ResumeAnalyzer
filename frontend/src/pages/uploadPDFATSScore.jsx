@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/uploadPDFATSScore.css";
+import { Link } from "react-router-dom";
 // import "../App.css";
 
 const UploadPDFATSScore = () => {
@@ -51,10 +52,10 @@ const UploadPDFATSScore = () => {
       };
     }
 
-    setAnalysis(parsed);
-  } catch (error) {
-    console.error("LLM Error:", error);
-    setAnalysis({
+     setAnalysis(parsed);
+      } catch (error) {
+       console.error("LLM Error:", error);
+        setAnalysis({
       ats_score: 0,
       skills_match: 0,
       experience_match: 0,
@@ -63,10 +64,10 @@ const UploadPDFATSScore = () => {
       weaknesses: [],
       summary: "AI analysis failed.",
     });
-  } finally {
+   } finally {
     setLoadingAI(false);
-  }
-};
+   }
+ };
 
   const handleUpload = async () => {
     if (!file) return alert("Please select a PDF");
@@ -109,7 +110,28 @@ const UploadPDFATSScore = () => {
   <div className="card">
     <div className="ats-score-page">
       <div className="upload-section">
+      
+  
         <h1>Resume Upload & ATS Analysis</h1>
+
+
+        <Link to="/" className="back-home-button">
+        Back Home
+      </Link>
+      <br />
+
+      <Link to="/uploadJobDescription" className="job-description-button">
+        Job Description Upload
+      </Link>
+            <br />
+
+
+      <Link to="/getATSScore" className="get-ATScore-button">
+        Get ATS Score
+      </Link>
+            <br />
+
+
 
         <div className="upload-controls">
           <input type="file" accept="application/pdf" onChange={handleFileChange} />

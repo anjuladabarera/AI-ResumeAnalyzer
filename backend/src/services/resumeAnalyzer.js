@@ -46,5 +46,43 @@ export async function analyzeResumeATS(text) {
     }
   `;
 
-  return await generateWithRetry(model, prompt);
+
+  
+
+
+
+    return await generateWithRetry(model, prompt);
 }
+
+
+
+export async function compareJDnResume(jdText, resumeText) {
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.5-flash",
+    }); 
+
+    const prompt = `
+      You are a job matching AI. Compare the following job description and resume and tell that should i apply for this job or not.
+
+
+      Job Description:
+      ${jdText}
+
+      Resume:
+      ${resumeText}
+
+      Reply ONLY in VALID JSON:
+
+      {
+        "match_score": number,
+        "skills_match": number,
+        "experience_match": number,
+        "missing_skills": [],
+        "strengths": [],
+        "weaknesses": [],
+        "summary": ""
+      }
+    `;  
+
+    return await generateWithRetry(model, prompt);
+} 

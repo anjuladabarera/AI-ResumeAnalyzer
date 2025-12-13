@@ -23,21 +23,6 @@ const JobDescriptionSchema = new mongoose.Schema({
     default: 0
   },
 
-  strengths: {
-    type: [String],
-    default: []
-  },
-
-  weaknesses: {
-    type: [String],
-    default: []
-  },
-
-  suggestions: {
-    type: [String],
-    default: []
-  },
-
   analyzedAt: {
     type: Date,
     default: Date.now

@@ -1,0 +1,86 @@
+.analysis-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.analysis-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.analysis-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.analysis-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  background: #fcd34d33;
+  color: #b45309;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+}
+
+.score-card {
+  background: #e0f2fe;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.score-label {
+  font-weight: 600;
+}
+
+.score-bar {
+  background: #d1d5db;
+  border-radius: 9999px;
+  height: 12px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.score-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.3s ease-in-out;
+}
+
+/* Score color classes */
+.bg-green { background-color: #22c55e; }
+.bg-yellow { background-color: #eab308; }
+.bg-red { background-color: #ef4444; }
+
+.score-number {
+  text-align: right;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.summary-card {
+  background: #f3f4f6;
+  border-radius: 12px;
+  padding: 1rem;
+}

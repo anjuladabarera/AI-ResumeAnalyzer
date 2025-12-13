@@ -10,4 +10,5 @@ const router = express.Router();
 router.post("/ats-score", atsScore);
 
 
+
 export default router;

@@ -1,120 +1,147 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
-  return (
-    <header>
-      <nav className="bg-white border-gray-200 px-4 lg:px-6 py-5 dark:bg-gray-800">
-        <div className="flex flex-wrap justify-between items-center mx-auto px-16">
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
+  const isActive = (path) => location.pathname === path;
+
+  const navLinks = [
+    { path: "/", label: "Home" },
+    { path: "/getATSScore", label: "Find Your ATS Score" },
+    { path: "/compareJobs", label: "Match Your Job" },
+    { path: "/features", label: "Features" },
+    { path: "/team", label: "Team" },
+    { path: "/contact", label: "Contact" },
+  ];
+
+  return (
+    <header className="sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-gray-200/50 shadow-sm">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16 lg:h-20">
           {/* Logo */}
-          <Link to="/" className="  left-align flex items-center">
-            <img
-              src="https://flowbite.com/docs/images/logo.svg"
-              className="mr-3 h-6 sm:h-9"
-              alt="Flowbite Logo"
-            />
-            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white left-align">
-              Flowbite3
+          <Link
+            to="/"
+            className="flex items-center space-x-3 group transition-transform duration-300 hover:scale-105"
+          >
+            <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow duration-300">
+              <span className="text-white font-bold text-lg">S</span>
+            </div>
+            <span className="text-xl lg:text-2xl font-bold text-gradient">
+              SkillMatchr
             </span>
           </Link>
 
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center space-x-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                  isActive(link.path)
+                    ? "text-primary-600 bg-primary-50"
+                    : "text-gray-700 hover:text-primary-600 hover:bg-gray-50"
+                }`}
+              >
+                {link.label}
+                {isActive(link.path) && (
+                  <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-primary-600 rounded-full"></span>
+                )}
+              </Link>
+            ))}
+          </div>
+
           {/* Right side buttons */}
-          <div className="flex items-center lg:order-2">
+          <div className="flex items-center space-x-3">
             <Link
               to="/login"
-              className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
+              className="hidden sm:block px-4 py-2 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-all duration-300 hover:text-primary-600"
             >
               Log in
             </Link>
 
             <Link
               to="/register"
-              className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+              className="hidden sm:block btn-primary text-sm"
             >
               Get started
             </Link>
 
             {/* Mobile menu button */}
             <button
-              data-collapse-toggle="mobile-menu-2"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               type="button"
-              className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              aria-controls="mobile-menu-2"
-              aria-expanded="false"
+              className="lg:hidden inline-flex items-center justify-center p-2 rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all duration-200"
+              aria-label="Toggle menu"
             >
-              <span className="sr-only">Open main menu</span>
               <svg
-                className="w-6 h-6"
-                fill="currentColor"
-                viewBox="0 0 20 20"
+                className={`w-6 h-6 transition-transform duration-300 ${
+                  isMobileMenuOpen ? "rotate-90" : ""
+                }`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                <path
-                  fillRule="evenodd"
-                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                  clipRule="evenodd"
-                />
+                {isMobileMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
               </svg>
             </button>
           </div>
+        </div>
 
-          {/* Menu items */}
-          <div
-            className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
-            id="mobile-menu-2"
-          >
-            <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
-              <li>
-                <Link
-                  to="/"
-                  className="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white"
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/getATSScore"
-                  className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 dark:hover:text-white dark:border-gray-700"
-                >
-                  Find Your ATS Score
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/compareJobs"
-                  className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 dark:hover:text-white dark:border-gray-700"
-                >
-                  Match Your Job
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/features"
-                  className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 dark:hover:text-white dark:border-gray-700"
-                >
-                  Features
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/team"
-                  className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 dark:hover:text-white dark:border-gray-700"
-                >
-                  Team
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/contact"
-                  className="block py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 dark:hover:text-white"
-                >
-                  Contact
-                </Link>
-              </li>
-            </ul>
+        {/* Mobile menu */}
+        <div
+          className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+            isMobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="px-2 pt-2 pb-4 space-y-1 border-t border-gray-200 mt-2">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`block px-4 py-3 text-base font-medium rounded-lg transition-all duration-200 ${
+                  isActive(link.path)
+                    ? "text-primary-600 bg-primary-50"
+                    : "text-gray-700 hover:bg-gray-50 hover:text-primary-600"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <div className="pt-4 space-y-2 border-t border-gray-200">
+              <Link
+                to="/login"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block px-4 py-2 text-center text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-all duration-200"
+              >
+                Log in
+              </Link>
+              <Link
+                to="/register"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block px-4 py-2 text-center text-sm font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-all duration-200"
+              >
+                Get started
+              </Link>
+            </div>
           </div>
-
         </div>
       </nav>
     </header>

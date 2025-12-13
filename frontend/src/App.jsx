@@ -5,15 +5,12 @@ import HomePage from "./pages/homePage.jsx";
 import UploadJobDescription from "./pages/uploadJobDescription.jsx";
 import UploadPDFATSScore from "./pages/uploadPDFATSScore.jsx";
 import Navbar from "./components/navbar.jsx";
-          import hero from "./components/hero.jsx";
 
 const App = () => {
   return (
     <>
       {/* Navbar always visible */}
       <Navbar />
-      <hero />
-      
 
       {/* Page routes */}
       <Routes>

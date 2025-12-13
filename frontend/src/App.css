@@ -1,87 +1,21 @@
-/* Center root content and limit width */
+/* App-level styles - most styling is now handled by Tailwind */
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  min-height: 100vh;
   font-family: 'Inter', sans-serif;
-  background-color: #f9fafb; /* Light gray background */
 }
 
-/* Logo styling */
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms, transform 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-  transform: scale(1.05);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-/* Spin animation for logo */
-@keyframes logo-spin {
+/* Page transition animations */
+@keyframes pageFadeIn {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: translateY(10px);
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-/* Card styling */
-.card {
-  padding: 2em;
-  border-radius: 1rem;
-  background-color: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-
-/* Link styling */
-.read-the-docs {
-  color: #888;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.read-the-docs:hover {
-  color: #4f46e5; /* Indigo accent */
-}
-
-/* Custom class for legacy text styling */
-.custom1 {
-  font-family: 'Times New Roman', Times, serif;
-  color: red;
-  font-weight: bold;
-  font-size: 1.25rem;
-}
-
-/* Smooth scrollbar for overflow areas */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #a0a0a0;
+.page-transition {
+  animation: pageFadeIn 0.4s ease-out;
 }

@@ -44,12 +44,7 @@ const Hero = () => {
                 </svg>
               </Link>
 
-              <Link
-                to="/contact"
-                className="btn-secondary inline-flex items-center justify-center text-base"
-              >
-                Speak to Sales
-              </Link>
+             
             </div>
 
             {/* Trust indicators */}

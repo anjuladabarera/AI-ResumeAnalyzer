@@ -11,9 +11,10 @@ const Navbar = () => {
     { path: "/", label: "Home" },
     { path: "/getATSScore", label: "Find Your ATS Score" },
     { path: "/compareJobs", label: "Match Your Job" },
-    { path: "/features", label: "Features" },
-    { path: "/team", label: "Team" },
-    { path: "/contact", label: "Contact" },
+    { path: "/findAJob", label: "Find a Job" },
+    { path: "/skillUp", label: "Skill Up" },
+    { path: "/aboutUs", label: "About Us" },
+    { path: "/contactUs", label: "Contact Us" },
   ];
 
   return (

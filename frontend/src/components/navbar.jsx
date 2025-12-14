@@ -22,17 +22,19 @@ const Navbar = () => {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 lg:h-20">
           {/* Logo */}
-          <Link
-            to="/"
-            className="flex items-center space-x-3 group transition-transform duration-300 hover:scale-105"
-          >
-            <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow duration-300">
-              <span className="text-white font-bold text-lg">S</span>
-            </div>
-            <span className="text-xl lg:text-2xl font-bold text-gradient">
-              SkillMatchr
-            </span>
-          </Link>
+                 <Link
+  to="/"
+  className="flex items-center group transition-transform duration-300 hover:scale-105 -ml-10">
+  <img
+    src="src/assets/SkillMatchr_logo.png"
+    alt="SkillMatchr Logo"
+    className="w-60 h-60 object-contain drop-shadow-md px-2
+               transition-transform duration-300
+               group-hover:-translate-y-0.5"
+  />
+</Link>
+
+
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-1">

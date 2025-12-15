@@ -25,9 +25,18 @@ export const Footer = () => {
 
         {/* Links */}
         <ul className="flex flex-wrap justify-center items-center mb-6 text-gray-900 dark:text-white">
-          {["About", "Premium", "Campaigns", "Blog", "Affiliate Program", "FAQs", "Contact"].map(
+          {[ "Blog", "About Us", "FAQs", "Contact"].map(
             (item) => (
               <li key={item}>
+                <a href="" className="mr-4 hover:underline md:mr-6">
+                  {item}
+                </a>
+                <a href="#" className="mr-4 hover:underline md:mr-6">
+                  {item}
+                </a>
+                <a href="#" className="mr-4 hover:underline md:mr-6">
+                  {item}
+                </a>
                 <a href="#" className="mr-4 hover:underline md:mr-6">
                   {item}
                 </a>

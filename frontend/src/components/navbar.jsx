@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import logo from "../assets/SkillMatchr_logo.png"; // adjust path if needed
+
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -26,7 +28,7 @@ const Navbar = () => {
   to="/"
   className="flex items-center group transition-transform duration-300 hover:scale-105 -ml-10">
   <img
-    src="src/assets/SkillMatchr_logo.png"
+    src={logo}
     alt="SkillMatchr Logo"
     className="w-60 h-60 object-contain drop-shadow-md px-2
                transition-transform duration-300

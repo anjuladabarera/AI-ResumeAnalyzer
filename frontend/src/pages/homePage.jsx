@@ -1,6 +1,10 @@
 import React from "react";
 import Hero from "../components/hero";
 
+
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
+
 const HomePage = () => {
   const features = [
     {
@@ -62,6 +66,7 @@ const HomePage = () => {
   return (
     <div className="min-h-screen">
       <Hero />
+
 
       {/* Features Section */}
       <section className="py-16 lg:py-24 bg-white/50 backdrop-blur-sm">

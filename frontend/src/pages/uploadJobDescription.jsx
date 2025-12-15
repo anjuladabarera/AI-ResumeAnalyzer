@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+
+
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+console.log("API URL:", import.meta.env.VITE_API_URL);
+
+
 const UploadJobDescription = () => {
   const getScoreColor = (score = 0) => {
     if (score >= 80) return "bg-green-500";
@@ -41,7 +47,11 @@ const UploadJobDescription = () => {
     setAnalysis(null);
 
     try {
-      const res = await axios.post("http://localhost:3000/api/cv/upload", formData, {
+      const res = await axios.post(
+        `${API_BASE_URL}/api/cv/upload`,
+        // "http://localhost:3000/api/cv/upload", formData, 
+      
+        {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -65,7 +75,10 @@ const UploadJobDescription = () => {
     setAnalysis(null);
 
     try {
-      const res = await axios.post("http://localhost:3000/api/cv/compare-jobs", {
+      const res = await axios.post
+        // ("http://localhost:3000/api/cv/compare-jobs", 
+        (`${API_BASE_URL}/api/cv/compare-jobs`,
+        {
         jdText: jobDescription,
         text: resumeText,
       });

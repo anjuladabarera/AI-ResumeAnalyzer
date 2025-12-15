@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+
+
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
+
 const UploadPDFATSScore = () => {
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState("");
@@ -33,10 +38,14 @@ const UploadPDFATSScore = () => {
   const sendToLLM = async (text) => {
     setLoadingAI(true);
     try {
-      const res = await axios.post(
-        "http://localhost:3000/api/cv/ats-score",
-        { text }
-      );
+      const res = await axios.post( 
+        `${API_BASE_URL}/api/cv/ats-score`,
+         { text }
+
+        // "http://localhost:3000/api/cv/ats-score",
+        
+    );
+    
 
       let parsed;
       try {
@@ -91,7 +100,8 @@ const UploadPDFATSScore = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/cv/upload",
+          `${API_BASE_URL}/api/cv/upload`,
+        // "http://localhost:3000/api/cv/upload",
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );

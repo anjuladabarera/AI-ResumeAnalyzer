@@ -6,6 +6,7 @@ import UploadJobDescription from "./pages/uploadJobDescription.jsx";
 import UploadPDFATSScore from "./pages/uploadPDFATSScore.jsx";
 import Navbar from "./components/navbar.jsx";
 import ContactUs from "./pages/contactUs.jsx";
+import Footer from "./components/footer.jsx";
 
 const App = () => {
   return (
@@ -23,6 +24,13 @@ const App = () => {
         {/* <Route path="/aboutUs" element={<AboutUS />}/> */}
         <Route path="/contactUs" element={<ContactUs/>}/>
       </Routes>
+
+
+
+
+            {/* Navbar always visible */}
+      <Footer />
+
     </>
   );
 };

@@ -1,5 +1,8 @@
 import React from "react";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
+
 const ContactUs = () => {
   return (
     <section className="bg-white dark:bg-gray-900">

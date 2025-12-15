@@ -48,7 +48,7 @@ const UploadJobDescription = () => {
 
     try {
       const res = await axios.post(
-        `${API_BASE_URL}/api/cv/upload`,
+        `${API_BASE_URL}/api/cv/upload`,formData,
         // "http://localhost:3000/api/cv/upload", formData, 
       
         {

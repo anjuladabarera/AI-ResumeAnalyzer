@@ -39,7 +39,7 @@ export const Footer = () => {
 
         {/* Copyright */}
         <span className="text-sm text-gray-500 dark:text-gray-400">
-          © {new Date().getFullYear()} SkillMatchr™. All Rights Reserved.
+          © {new Date().getFullYear()} SkillMatchr™ | Anjula Dabarera | All Rights Reserved.
         </span>
       </div>
     </footer>

@@ -31,15 +31,7 @@ export const Footer = () => {
                 <a href="" className="mr-4 hover:underline md:mr-6">
                   {item}
                 </a>
-                <a href="#" className="mr-4 hover:underline md:mr-6">
-                  {item}
-                </a>
-                <a href="#" className="mr-4 hover:underline md:mr-6">
-                  {item}
-                </a>
-                <a href="#" className="mr-4 hover:underline md:mr-6">
-                  {item}
-                </a>
+               
               </li>
             )
           )}

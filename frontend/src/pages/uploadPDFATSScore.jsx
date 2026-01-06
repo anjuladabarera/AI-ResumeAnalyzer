@@ -91,7 +91,7 @@ const UploadPDFATSScore = () => {
     }
 
     const formData = new FormData();
-    formData.append("pdf", file);
+    formData.append("file", file);
 
     setLoadingUpload(true);
     setMessage("");

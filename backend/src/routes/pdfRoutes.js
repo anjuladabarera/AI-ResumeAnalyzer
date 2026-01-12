@@ -12,7 +12,7 @@ const router = express.Router();
 
 //routes
 // router.get("/", getallPDFs);
-router.post("/upload", upload_pdf.single("pdf"), uploadPDF);
+router.post("/upload", upload_pdf.single("file"), uploadPDF);
     
 
 

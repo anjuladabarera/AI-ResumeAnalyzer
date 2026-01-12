@@ -30,6 +30,12 @@ console.log(`Server is running on port ${PORT}`);
 });
 
 
+app.get("/", (req, res) => {
+  res.send("SkillMatchr Backend is running!");
+});
+
+
+
 
 
 
